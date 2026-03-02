@@ -37,6 +37,15 @@ export function createMcpServer({
     },
     async () => {
       const status = bridge.getStatus();
+      const structuredStatus = {
+        botReady: status.botReady,
+        botUserId: status.botUserId,
+        allowedChannelCount: status.allowedChannelCount,
+        allowedUserCount: status.allowedUserCount,
+        queue: {
+          ...status.queue
+        }
+      };
 
       return {
         content: [
@@ -45,7 +54,7 @@ export function createMcpServer({
             text: JSON.stringify(status, null, 2)
           }
         ],
-        structuredContent: status
+        structuredContent: structuredStatus
       };
     }
   );

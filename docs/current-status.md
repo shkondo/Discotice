@@ -1,67 +1,67 @@
-# Current Work Status
+# 現在の作業状況
 
-Last updated: 2026-03-02
+最終更新: 2026-03-02
 
-## Repository State
+## リポジトリの状態
 
-- Git working tree: clean
-- Latest commit: `d22e41c`
-- Latest commit message: `Add minimal Discord command bridge MCP server`
+- Git のワークツリー: このファイルを含む未コミット変更あり
+- 最新コミット: `04a22fe`
+- 最新コミットメッセージ: `Add current work status document`
 
-## What Is Implemented
+## 実装済みの内容
 
-- Minimal Node.js + TypeScript project scaffold
-- MCP server over stdio using `@modelcontextprotocol/sdk`
-- Discord bot integration using `discord.js`
-- In-memory command queue for Discord messages
-- Message intake guards:
-  - bot mention required
-  - allowed channel restriction
-  - allowed user restriction
-  - command length limit
-  - simple blocked-fragment filter
-- MCP tools to:
-  - inspect bridge status
-  - list pending commands
-  - claim the next command
-  - send a command response back to Discord
-  - reject a command with a reason
-  - inspect a tracked command by ID
-- Environment variable template in `.env.example`
-- Antigravity MCP config example in `docs/antigravity-mcp-config.example.json`
-- Setup and validation instructions in `README.md`
+- Node.js + TypeScript の最小プロジェクト構成
+- `@modelcontextprotocol/sdk` を使った stdio ベースの MCP サーバー
+- `discord.js` を使った Discord Bot 連携
+- Discord メッセージ用のインメモリコマンドキュー
+- メッセージ受信時のガード:
+  - Bot へのメンション必須
+  - 許可チャンネル制限
+  - 許可ユーザー制限
+  - コマンド文字数制限
+  - 単純な危険文字列ブロック
+- MCP ツール:
+  - ブリッジ状態の確認
+  - pending command の一覧取得
+  - 次の command の claim
+  - Discord への応答返信
+  - 理由付き reject
+  - command ID 指定での状態確認
+- `.env.example` による環境変数テンプレート
+- `docs/antigravity-mcp-config.example.json` による Antigravity 設定例
+- `README.md` にセットアップ手順と検証手順
 
-## Key Files
+## 主要ファイル
 
-- `package.json`: package metadata and scripts
-- `tsconfig.json`: TypeScript build configuration
-- `src/index.ts`: process entry point, Discord startup, MCP stdio connection
-- `src/config.ts`: environment loading and validation
-- `src/command-queue.ts`: in-memory queue and state transitions
-- `src/discord-bot.ts`: Discord message intake and reply handling
-- `src/mcp-server.ts`: MCP tool registration
-- `docs/antigravity-mcp-config.example.json`: Antigravity config example
+- `package.json`: パッケージ定義と実行スクリプト
+- `tsconfig.json`: TypeScript のビルド設定
+- `src/index.ts`: エントリポイント、Discord 起動、MCP stdio 接続
+- `src/config.ts`: 環境変数の読み込みとバリデーション
+- `src/command-queue.ts`: インメモリキューと状態遷移
+- `src/discord-bot.ts`: Discord メッセージ受信と返信処理
+- `src/mcp-server.ts`: MCP ツール登録
+- `docs/antigravity-mcp-config.example.json`: Antigravity 用設定例
 
-## Current Verification Status
+## 現在の検証状況
 
-- Source files created and committed
-- Build has not been executed in this environment
-- Dependencies have not been installed in this environment
-- Discord API connectivity has not been validated with a real bot token
-- Antigravity connectivity has not been validated with a live client
+- ソースファイルの作成とコミットは完了
+- `npm install` 実行済み
+- `npm run build` 成功
+- 実際の Bot token を使った Discord API 接続確認は未実施
+- 実際の Antigravity クライアントとの接続確認は未実施
 
-## Known Constraints
+## 既知の制約
 
-- Queue is memory-only and resets on process restart
-- No automatic job execution from Discord messages; an MCP client must claim commands
-- Safety filter is intentionally minimal and based on string matching
-- No persistence, audit log, retries, or multi-client coordination
-- No tests are included yet
+- キューはメモリのみで、プロセス再起動時に消える
+- Discord メッセージから自動実行はせず、MCP クライアント側で claim が必要
+- 安全フィルタは意図的に最小で、文字列一致ベース
+- 永続化、監査ログ、リトライ、複数クライアント調停は未実装
+- テストは未作成
 
-## Recommended Next Steps
+## 次に進める作業
 
-1. Run `npm install`
-2. Run `npm run build`
-3. Create a `.env` file from `.env.example`
-4. Validate Discord message intake with a real bot in a restricted test channel
-5. Connect Antigravity using the example MCP config and verify the end-to-end flow
+1. `npm install` を実行する
+2. `npm run build` を実行する
+3. `.env.example` から `.env` を作成する
+4. 制限したテスト用チャンネルで Discord 受信を確認する
+5. Antigravity に設定を追加してエンドツーエンド動作を確認する
