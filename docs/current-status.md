@@ -5,8 +5,8 @@
 ## リポジトリの状態
 
 - Git のワークツリー: このファイルを含む未コミット変更あり
-- 最新コミット: `04a22fe`
-- 最新コミットメッセージ: `Add current work status document`
+- 最新コミット: `690a096`
+- 最新コミットメッセージ: `Fix MCP build typing and update status docs`
 
 ## 実装済みの内容
 
@@ -47,6 +47,7 @@
 - ソースファイルの作成とコミットは完了
 - `npm install` 実行済み
 - `npm run build` 成功
+- `dist/` 生成済み
 - 実際の Bot token を使った Discord API 接続確認は未実施
 - 実際の Antigravity クライアントとの接続確認は未実施
 
@@ -58,10 +59,32 @@
 - 永続化、監査ログ、リトライ、複数クライアント調停は未実装
 - テストは未作成
 
-## 次に進める作業
+## 対応が必要なタスクリスト
 
-1. `npm install` を実行する
-2. `npm run build` を実行する
-3. `.env.example` から `.env` を作成する
-4. 制限したテスト用チャンネルで Discord 受信を確認する
-5. Antigravity に設定を追加してエンドツーエンド動作を確認する
+1. Discord Developer Portal で Bot アプリを作成する
+2. Bot token を発行し、`.env` の `DISCORD_BOT_TOKEN` に設定する
+3. Bot 設定で `Message Content Intent` を有効化する
+4. Bot を対象サーバーに招待する
+5. 対象チャンネルで Bot に `View Channels`、`Send Messages`、`Read Message History` を付与する
+6. 処理対象のチャンネル ID を取得し、`.env` の `DISCORD_ALLOWED_CHANNEL_IDS` に設定する
+7. 実行を許可するユーザー ID を取得し、`.env` の `DISCORD_ALLOWED_USER_IDS` に設定する
+8. `.env.example` を元に `.env` を作成し、必要値を埋める
+9. `npm start` で起動し、Discord 接続ログが出ることを確認する
+10. 許可ユーザーが許可チャンネルで Bot にメンションしてメッセージを送信し、pending command に入ることを確認する
+11. Antigravity 側に MCP 設定を追加し、`discord_list_pending_commands` から `discord_send_command_response` までの動作を確認する
+
+## Discord 側で必要な設定
+
+- 必須:
+  - Bot アプリの作成
+  - Bot token の発行
+  - `Message Content Intent` の有効化
+  - 対象サーバーへの Bot 招待
+  - 対象チャンネルでの権限付与
+  - チャンネル ID とユーザー ID の取得
+- 不要:
+  - Webhook の作成
+  - チャンネルごとの Webhook URL 設定
+  - Slash Command の登録
+
+この実装は Webhook 受信ではなく、Bot が Gateway 経由でメッセージを受信する方式です。
