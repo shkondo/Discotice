@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "discord-command-bridge": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/absolute/path/to/Discotice/dist/index.js"
+      ],
+      "env": {
+        "DISCORD_BOT_TOKEN": "replace-with-your-bot-token",
+        "DISCORD_ALLOWED_CHANNEL_IDS": "123456789012345678",
+        "DISCORD_ALLOWED_USER_IDS": "123456789012345678",
+        "DISCORD_COMMAND_MAX_LENGTH": "500",
+        "DISCORD_QUEUE_LIMIT": "50",
+        "DISCORD_EXTRA_BLOCKLIST": ""
+      }
+    }
+  }
+}
